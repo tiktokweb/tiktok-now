@@ -1,7 +1,10 @@
-const { getFeed } = require('tiktokk-api');
+const tiktok = require('tiktokk-api');
 const { json } = require('micro');
 
 module.exports = async(req) => {
   const data = await json(req);
-  return await getFeed(data);
+  let { version } = data;
+  delete data.version;
+  
+  return await new tiktok(version).getFeed(data);
 }
